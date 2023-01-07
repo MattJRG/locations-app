@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { LocationsAppContainer } from './locations-app.container';
 
 @NgModule({
   declarations: [
-    AppComponent
+    LocationsAppContainer
   ],
   imports: [
     BrowserModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [LocationsAppContainer]
 })
-export class AppModule { }
+export class LocationsAppContainerModule { }
