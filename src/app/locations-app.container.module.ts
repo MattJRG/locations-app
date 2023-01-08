@@ -11,9 +11,9 @@ import { LocationRowComponent } from './components/location-row/location-row.com
 import { PaginationComponent } from './components/pagination/pagination.component';
 
 import { LocationsAppContainer } from './locations-app.container';
-import { LocationStoreModule } from './stores/location/location-store.module';
-import { LocationApiService } from './stores/location/location.service';
-import { metaReducers, reducers } from './stores/reducer';
+import { LocationStoreModule } from './store/location/location-store.module';
+import { LocationApiService } from './store/location/location.service';
+import { metaReducers, reducers } from './store/reducer';
 
 @NgModule({
   declarations: [LocationsAppContainer],
@@ -39,4 +39,5 @@ import { metaReducers, reducers } from './stores/reducer';
   providers: [LocationApiService],
   bootstrap: [LocationsAppContainer],
 })
-export class LocationsAppContainerModule {}
+export class LocationsAppContainerModule {
+}

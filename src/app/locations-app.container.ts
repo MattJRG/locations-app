@@ -6,13 +6,13 @@ import { Observable, Subscription } from 'rxjs';
 import { LocationFormDialogComponent } from './components/location-form-dialog/location-form-dialog.component';
 import { LocationData } from './models/location.model';
 import { PageChangeDirection, PageMeta } from './models/pagination.model';
-import * as LocationActions from './stores/location/location.actions';
-import { LocationState, LocationStateAction } from './stores/location/location.reducer';
+import * as LocationActions from './store/location/location.actions';
+import { LocationState, LocationStateAction } from './store/location/location.reducer';
 import {
   selectCurrentPageLocations,
   selectLocationStateAction,
   selectPageMeta,
-} from './stores/location/location.selectors';
+} from './store/location/location.selectors';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +29,8 @@ export class LocationsAppContainer implements OnInit, OnDestroy {
     private readonly _locationStore: Store<LocationState>,
     private readonly _dialog: DialogService,
     private readonly _toast: ToastrService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.locations$ = this._locationStore.select(selectCurrentPageLocations);
@@ -53,20 +54,20 @@ export class LocationsAppContainer implements OnInit, OnDestroy {
   openLocationFormDialog(location?: LocationData): void {
     this.subscriptions.add(
       this._dialog
-        .open(LocationFormDialogComponent, { data: location })
-        .afterClosed$.subscribe((locationSubmission) => {
-          if (locationSubmission) {
-            if (!locationSubmission.id) {
-              this._locationStore.dispatch(
-                LocationActions.addNewLocation({ location: locationSubmission }),
-              );
-            } else {
-              this._locationStore.dispatch(
-                LocationActions.editLocationById({ location: locationSubmission }),
-              );
-            }
+      .open(LocationFormDialogComponent, { data: location })
+      .afterClosed$.subscribe((locationSubmission) => {
+        if (locationSubmission) {
+          if (!locationSubmission.id) {
+            this._locationStore.dispatch(
+              LocationActions.addNewLocation({ location: locationSubmission }),
+            );
+          } else {
+            this._locationStore.dispatch(
+              LocationActions.editLocationById({ location: locationSubmission }),
+            );
           }
-        }),
+        }
+      }),
     );
   }
 

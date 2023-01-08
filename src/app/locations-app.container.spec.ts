@@ -12,10 +12,10 @@ import { LocationRowComponent } from './components/location-row/location-row.com
 import { LocationsAppContainer } from './locations-app.container';
 import { LocationData } from './models/location.model';
 import { PageChangeDirection } from './models/pagination.model';
-import * as LocationActions from './stores/location/location.actions';
-import { LocationStateAction } from './stores/location/location.reducer';
-import { selectCurrentPageLocations } from './stores/location/location.selectors';
-import { LocationApiService } from './stores/location/location.service';
+import * as LocationActions from './store/location/location.actions';
+import { LocationStateAction } from './store/location/location.reducer';
+import { selectCurrentPageLocations } from './store/location/location.selectors';
+import { LocationApiService } from './store/location/location.service';
 
 export const getLocations = (num: number): LocationData[] => {
   return Array.from({ length: num }, (elem, i) => ({ ...mockLocation }));
