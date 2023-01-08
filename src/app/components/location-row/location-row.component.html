@@ -1,0 +1,23 @@
+<div *ngIf="location?.id"
+  class="location-row">
+  <div class="details">
+    <div><strong>{{ location.address_line_1 }}, {{ location.city }}, {{ location.country }}</strong></div>
+
+    <div>
+      <div>Property Value: {{ location.property_value }}</div>
+      <div>Business Interruption Value: {{ location.business_interruption_value }}</div>
+    </div>
+
+    <div>
+      <div>Latitude: {{ location.lat }}</div>
+      <div>Longitude: {{ location.lon }}</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button (click)="onEditLocation()">Edit</button>
+    <button class="warning"
+      (click)="onDeleteLocation(location.id)">Delete
+    </button>
+  </div>
+</div>

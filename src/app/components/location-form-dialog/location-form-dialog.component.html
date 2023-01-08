@@ -1,0 +1,67 @@
+<div class="dialog-content">
+  <h2>{{ isEditing ? 'Edit' : 'Add New' }} Location</h2>
+  <form [formGroup]="formGroup"
+    (ngSubmit)="onSaveLocation()">
+
+    <div class="form-row">
+      <label for="addressLine">Line One *</label>
+      <input type="text"
+        id="addressLine"
+        formControlName="address_line_1">
+    </div>
+
+    <div class="form-row">
+      <label for="city">City *</label>
+      <input type="text"
+        id="city"
+        formControlName="city">
+    </div>
+
+    <div class="form-row">
+      <label for="country">Country *</label>
+      <input type="text"
+        id="country"
+        formControlName="country">
+    </div>
+
+    <div class="form-row">
+      <label for="propertyValue">Property Value *</label>
+      <input type="text"
+        id="propertyValue"
+        formControlName="property_value">
+    </div>
+
+    <div class="form-row">
+      <label for="businessInterruptionValue">Business Interruption Value *</label>
+      <input type="text"
+        id="businessInterruptionValue"
+        formControlName="business_interruption_value">
+    </div>
+
+    <div class="form-row">
+      <label for="latitude">Latitude *</label>
+      <input type="number"
+        id="latitude"
+        formControlName="lat">
+    </div>
+
+    <div class="form-row">
+      <label for="longitude">Longitude *</label>
+      <input type="number"
+        id="longitude"
+        formControlName="lon">
+    </div>
+
+    <div class="button-wrapper">
+      <button type="button"
+        class="warning"
+        (click)="onCloseDialog()">Cancel
+      </button>
+
+      <button type="submit"
+        [disabled]="!formGroup.valid">Save
+      </button>
+    </div>
+  </form>
+</div>
+

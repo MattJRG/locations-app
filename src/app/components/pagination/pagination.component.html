@@ -1,0 +1,13 @@
+<div class="pagination-status">
+  Viewing {{ viewingFrom }}-{{ viewingTo }} of {{ ((pageMeta.totalCount || 0) | number) }}
+</div>
+
+<div class="pagination-actions">
+  <button (click)="onPageChange(pageChangeDirection.PREVIOUS)"
+    [disabled]="!pageMeta.prevPage"><
+  </button>
+
+  <button (click)="onPageChange(pageChangeDirection.NEXT)"
+    [disabled]="!pageMeta.nextPage">>
+  </button>
+</div>

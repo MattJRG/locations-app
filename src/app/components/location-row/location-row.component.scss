@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 1px -1px #0003, 0 1px 1px #00000024, 0 1px 3px #0000001f;
+}
+
+.location-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 4px;
+
+  .details {
+    div {
+      margin-bottom: 5px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-self: flex-end;
+    gap: 10px;
+  }
+}

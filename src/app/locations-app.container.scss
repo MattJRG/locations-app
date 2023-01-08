@@ -1,0 +1,35 @@
+.header {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 65px;
+  color: #fff;
+  background-color: #0d6efd;
+  box-shadow: 0 2px 5px #0000004d;
+
+
+  .content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+.main-container {
+  margin-top: 65px;
+  padding-block: 15px;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.content {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 15px;
+}

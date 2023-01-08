@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+
+  .pagination-status {
+    color: grey;
+  }
+
+  .pagination-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    > button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: auto;
+      padding: 5px 15px;
+      font-size: 24px;
+    }
+  }
+}
