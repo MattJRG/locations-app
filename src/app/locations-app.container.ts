@@ -1,21 +1,23 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DialogService } from '@ngneat/dialog';
+import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
 import { LocationFormDialogComponent } from './components/location-form-dialog/location-form-dialog.component';
-import { LocationRowComponent } from './components/location-row/location-row.component';
-import { PaginationComponent } from './components/pagination/pagination.component';
 import { LocationData } from './models/location.model';
 import { PageChangeDirection, PageMeta } from './models/pagination.model';
-import { LocationStateAction, LocationStore } from './store/location.store';
+import * as LocationActions from './stores/location/location.actions';
+import { LocationState, LocationStateAction } from './stores/location/location.reducer';
+import {
+  selectCurrentPageLocations,
+  selectLocationStateAction,
+  selectPageMeta,
+} from './stores/location/location.selectors';
 
 @Component({
   selector: 'app-root',
   templateUrl: './locations-app.container.html',
   styleUrls: ['./locations-app.container.scss'],
-  standalone: true,
-  imports: [CommonModule, PaginationComponent, LocationRowComponent],
 })
 export class LocationsAppContainer implements OnInit, OnDestroy {
   locations$!: Observable<LocationData[]>;
@@ -24,26 +26,26 @@ export class LocationsAppContainer implements OnInit, OnDestroy {
   loading = true;
 
   constructor(
-    private readonly _locationStore: LocationStore,
+    private readonly _locationStore: Store<LocationState>,
     private readonly _dialog: DialogService,
     private readonly _toast: ToastrService,
   ) {}
 
   ngOnInit(): void {
-    this.locations$ = this._locationStore.currentPageLocations$;
-    this.pageMeta$ = this._locationStore.pageMeta$;
+    this.locations$ = this._locationStore.select(selectCurrentPageLocations);
+    this.pageMeta$ = this._locationStore.select(selectPageMeta);
 
-    this._locationStore.loadLocations();
+    this._locationStore.dispatch(LocationActions.loadLocations());
     this.subscriptions.add(this._setupLocationStateActionSubscription());
   }
 
   onPageChange(direction: PageChangeDirection): void {
     switch (direction) {
       case PageChangeDirection.NEXT:
-        this._locationStore.loadNextPageOfLocations();
+        this._locationStore.dispatch(LocationActions.loadNextPageOfLocations());
         break;
       case PageChangeDirection.PREVIOUS:
-        this._locationStore.loadPrevPageOfLocations();
+        this._locationStore.dispatch(LocationActions.loadPrevPageOfLocations());
         break;
     }
   }
@@ -55,9 +57,13 @@ export class LocationsAppContainer implements OnInit, OnDestroy {
         .afterClosed$.subscribe((locationSubmission) => {
           if (locationSubmission) {
             if (!locationSubmission.id) {
-              this._locationStore.addNewLocation(locationSubmission);
+              this._locationStore.dispatch(
+                LocationActions.addNewLocation({ location: locationSubmission }),
+              );
             } else {
-              this._locationStore.editLocationById(locationSubmission);
+              this._locationStore.dispatch(
+                LocationActions.editLocationById({ location: locationSubmission }),
+              );
             }
           }
         }),
@@ -65,7 +71,7 @@ export class LocationsAppContainer implements OnInit, OnDestroy {
   }
 
   onDeleteLocation(id: number): void {
-    this._locationStore.deleteLocationById(id);
+    this._locationStore.dispatch(LocationActions.deleteLocationById({ id }));
   }
 
   ngOnDestroy(): void {
@@ -73,8 +79,8 @@ export class LocationsAppContainer implements OnInit, OnDestroy {
   }
 
   private _setupLocationStateActionSubscription(): Subscription {
-    return this._locationStore.state$.subscribe((state) => {
-      switch (state.action) {
+    return this._locationStore.select(selectLocationStateAction).subscribe((action) => {
+      switch (action) {
         case LocationStateAction.LOCATIONS_LOADED:
           this.loading = false;
           break;
@@ -90,6 +96,8 @@ export class LocationsAppContainer implements OnInit, OnDestroy {
         case LocationStateAction.HAS_ERROR:
           this._toast.error('Action failed, please try again', 'Error');
       }
+      // Reset the state action to allow multiple actions of the same type to show toast
+      this._locationStore.dispatch(LocationActions.resetLocationStateAction());
     });
   }
 }

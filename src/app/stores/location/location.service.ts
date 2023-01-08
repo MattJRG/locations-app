@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { LocationData } from '../models/location.model';
+import { LocationData } from '../../models/location.model';
 
 export const LOCATIONS_JSON_PATH = './assets/json/locations.json';
 
