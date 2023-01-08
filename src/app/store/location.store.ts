@@ -82,19 +82,20 @@ export class LocationStore extends ComponentStore<LocationsState> {
       locations: [...newLocations],
       currentPageLocations: _getLocationsForPage(newLocations, state.pageMeta.currentPage),
       pageMeta: getLocationsPageMeta(newLocations, state.pageMeta),
-      ...initialStateHandling,
       action: LocationStateAction.LOCATION_ADDED,
     };
   });
 
   readonly editLocationById = this.updater(
     (state: LocationsState, editedLocation: LocationData) => {
+      const newLocations = state.locations.map((location) =>
+        location.id === editedLocation.id ? editedLocation : location,
+      );
+
       return {
         ...state,
-        locations: state.locations.map((location) =>
-          location.id === editedLocation.id ? editedLocation : location,
-        ),
-        ...initialStateHandling,
+        locations: newLocations,
+        currentPageLocations: _getLocationsForPage(newLocations, state.pageMeta.currentPage),
         action: LocationStateAction.LOCATION_UPDATED,
       };
     },
@@ -107,7 +108,6 @@ export class LocationStore extends ComponentStore<LocationsState> {
       locations: [...newLocations],
       currentPageLocations: _getLocationsForPage(newLocations, state.pageMeta.currentPage),
       pageMeta: getLocationsPageMeta(newLocations, state.pageMeta),
-      ...initialStateHandling,
       action: LocationStateAction.LOCATION_DELETED,
     };
   });
@@ -121,7 +121,6 @@ export class LocationStore extends ComponentStore<LocationsState> {
             locations: [...locations],
             currentPageLocations: locations.slice(0, DEFAULT_PAGE_SIZE),
             pageMeta: getLocationsPageMeta(locations, state.pageMeta),
-            ...initialStateHandling,
             action: LocationStateAction.LOCATIONS_LOADED,
           }));
         },
