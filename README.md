@@ -8,6 +8,9 @@ has been implemented to improve performance and improve UX.
 
 All application state management is handled by the LocationStore which is a NgRx Store.
 
+Note - This application can be seen running the NgRx Component Store for the state management on branch "
+component-store-state".
+
 ## Development setup
 
 - Install node v16.14.0.
