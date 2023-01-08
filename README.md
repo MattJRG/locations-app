@@ -6,7 +6,7 @@ The Locations App allows a user to view the locations data stored in the locatio
 folder. Users are able to edit and delete locations as well as add new ones. As the dataset is quite large pagination
 has been implemented to improve performance and improve UX.
 
-All application state management is handled by the LocationStore which is a NgRx Component Store.
+All application state management is handled by the LocationStore which is a NgRx Store.
 
 ## Development setup
 
