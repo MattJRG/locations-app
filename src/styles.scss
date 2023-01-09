@@ -51,3 +51,7 @@ body {
 *:after {
   box-sizing: inherit;
 }
+
+.ngneat-dialog-content {
+  overflow: scroll !important;
+}
