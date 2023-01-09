@@ -6,11 +6,17 @@
 
 .location-row {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
+  gap: 10px;
   padding: 15px;
   background-color: #ffffff;
   border-radius: 4px;
+
+  @media (min-width: 576px) {
+    flex-direction: row;
+  }
 
   .details {
     div {

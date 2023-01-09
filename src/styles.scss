@@ -10,6 +10,7 @@ body {
   padding: 0;
   font-family: 'Source Sans Pro', sans-serif;
   background-color: #FAFAFA;
+  overflow: hidden;
 
   button {
     display: inline-block;
@@ -44,4 +45,10 @@ body {
       cursor: not-allowed;
     }
   }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
