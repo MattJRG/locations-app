@@ -3,12 +3,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { LocationData } from '../../models/location.model';
 
 @Component({
-  selector: 'location-row',
-  templateUrl: 'location-row.component.html',
-  styleUrls: ['location-row.component.scss'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'location-row',
+    templateUrl: 'location-row.component.html',
+    styleUrls: ['location-row.component.scss'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocationRowComponent {
   @Input()

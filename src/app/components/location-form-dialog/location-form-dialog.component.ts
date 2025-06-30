@@ -5,11 +5,10 @@ import { DialogRef } from '@ngneat/dialog';
 import { LocationData, LocationForm } from '../../models/location.model';
 
 @Component({
-  templateUrl: 'location-form-dialog.component.html',
-  styleUrls: ['location-form-dialog.component.scss'],
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: 'location-form-dialog.component.html',
+    styleUrls: ['location-form-dialog.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocationFormDialogComponent {
   formGroup!: FormGroup<LocationForm>;

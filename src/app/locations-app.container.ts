@@ -13,11 +13,19 @@ import {
   selectLocationStateAction,
   selectPageMeta,
 } from './store/location/location.selectors';
+import { CommonModule } from '@angular/common';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { LocationRowComponent } from './components/location-row/location-row.component';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './locations-app.container.html',
-  styleUrls: ['./locations-app.container.scss'],
+    selector: 'app-root',
+    templateUrl: './locations-app.container.html',
+    styleUrls: ['./locations-app.container.scss'],
+    imports: [
+      CommonModule,
+      LocationRowComponent,
+      PaginationComponent,
+    ],
 })
 export class LocationsAppContainer implements OnInit, OnDestroy {
   locations$!: Observable<LocationData[]>;
