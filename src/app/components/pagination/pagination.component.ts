@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, input, Input, output, Output } from '@angular/core';
 import { PageChangeDirection, PageMeta } from '../../models/pagination.model';
 
 @Component({
@@ -10,18 +10,16 @@ import { PageChangeDirection, PageMeta } from '../../models/pagination.model';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaginationComponent {
-  @Input()
-  pageMeta!: PageMeta;
+  pageMeta = input.required<PageMeta>();
 
-  @Output()
-  pageChange = new EventEmitter<PageChangeDirection>();
+  pageChange = output<PageChangeDirection>();
 
   pageChangeDirection = PageChangeDirection;
 
   get viewingFrom(): number {
     let from: number;
-    if (this.pageMeta.totalCount > 0) {
-      from = this.pageMeta.currentPage * this.pageMeta.pageSize - this.pageMeta.pageSize + 1;
+    if (this.pageMeta().totalCount > 0) {
+      from = this.pageMeta().currentPage * this.pageMeta().pageSize - this.pageMeta().pageSize + 1;
     } else {
       from = 0;
     }
@@ -29,8 +27,8 @@ export class PaginationComponent {
   }
 
   get viewingTo(): number {
-    const maxViewingTo: number = this.pageMeta.currentPage * this.pageMeta.pageSize;
-    const to = Math.min(maxViewingTo, this.pageMeta.totalCount);
+    const maxViewingTo: number = this.pageMeta().currentPage * this.pageMeta().pageSize;
+    const to = Math.min(maxViewingTo, this.pageMeta().totalCount);
     return isNaN(to) ? 0 : to;
   }
 

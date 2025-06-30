@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, input, output, Output } from '@angular/core';
 import { LocationData } from '../../models/location.model';
 
 @Component({
@@ -10,17 +10,14 @@ import { LocationData } from '../../models/location.model';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LocationRowComponent {
-  @Input()
-  location!: LocationData;
+  location = input.required<LocationData>();
 
-  @Output()
-  editLocation = new EventEmitter<LocationData>();
+  editLocation = output<LocationData>();
 
-  @Output()
-  deleteLocation = new EventEmitter<number>();
+  deleteLocation = output<number>();
 
   onEditLocation(): void {
-    this.editLocation.emit(this.location);
+    this.editLocation.emit(this.location());
   }
 
   onDeleteLocation(id: number): void {

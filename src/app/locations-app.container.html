@@ -10,14 +10,15 @@
     <button (click)="openLocationFormDialog()">Add New Location</button>
   </div>
 
-  <pagination *ngIf="!loading"
-    [pageMeta]="(pageMeta$ | async)!"
-    (pageChange)="onPageChange($event)">
-  </pagination>
-
-  <location-row *ngFor="let location of locations$ | async"
-    [location]="location"
-    (editLocation)="openLocationFormDialog($event)"
-    (deleteLocation)="onDeleteLocation($event)">
-  </location-row>
+  @if (!loading) {
+    <pagination [pageMeta]="(pageMeta())"
+      (pageChange)="onPageChange($event)">
+    </pagination>
+  }
+  @for (location of locations(); track location.id) {
+    <location-row [location]="location"
+      (editLocation)="openLocationFormDialog($event)"
+      (deleteLocation)="onDeleteLocation($event)">
+    </location-row>
+  }
 </div>

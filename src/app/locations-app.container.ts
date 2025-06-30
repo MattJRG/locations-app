@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DialogService } from '@ngneat/dialog';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
@@ -28,8 +29,15 @@ import { LocationRowComponent } from './components/location-row/location-row.com
     ],
 })
 export class LocationsAppContainer implements OnInit, OnDestroy {
-  locations$!: Observable<LocationData[]>;
-  pageMeta$!: Observable<PageMeta>;
+  locations = toSignal(this._locationStore.select(selectCurrentPageLocations));
+  pageMeta = toSignal(this._locationStore.select(selectPageMeta), { initialValue: {
+    currentPage: 1,
+    nextPage: null,
+    pageSize: 10,
+    prevPage: null,
+    totalCount: 10,
+    totalPages: 1,
+  } });
   subscriptions = new Subscription();
   loading = true;
 
@@ -41,9 +49,6 @@ export class LocationsAppContainer implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.locations$ = this._locationStore.select(selectCurrentPageLocations);
-    this.pageMeta$ = this._locationStore.select(selectPageMeta);
-
     this._locationStore.dispatch(LocationActions.loadLocations());
     this.subscriptions.add(this._setupLocationStateActionSubscription());
   }
