@@ -1,27 +1,23 @@
-const { createDefaultPreset } = require('ts-jest');
-
-const tsJestTransformCfg = createDefaultPreset().transform;
-
 /** @type {import('jest').Config} */
 module.exports = {
-  testEnvironment: 'node',
+  preset: 'ts-jest/presets/default-esm',
+  testEnvironment: 'jsdom',
 
-  // Make sure ts-jest handles TS files
   transform: {
-    ...tsJestTransformCfg,
+    '^.+\\.(ts|tsx|js|mjs)$': ['ts-jest', { useESM: true }],
   },
 
-  // Recognize TypeScript + Angular file types
-  moduleFileExtensions: ['ts', 'html', 'js', 'json'],
+  moduleFileExtensions: ['ts', 'js', 'json', 'html', 'mjs'],
 
-  // Optional: skip transforms for non-code files
   moduleNameMapper: {
     '\\.(scss|css|html)$': 'identity-obj-proxy',
   },
 
-  // Optional: improve test file matching
-  testMatch: ['**/+(*.)+(spec).+(ts)'],
+  testMatch: ['**/?(*.)+(spec|test).ts'],
 
-  // Optional: coverage config
-  collectCoverageFrom: ['src/**/*.ts', '!src/main.ts'],
+  transformIgnorePatterns: [
+    'node_modules/(?!(rxjs|@angular|@ngrx|@ngneat|ngx-toastr)/)',
+  ],
+
+  extensionsToTreatAsEsm: ['.ts'],
 };
