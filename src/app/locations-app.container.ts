@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { DialogService } from '@ngneat/dialog';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { LocationFormDialogComponent } from './components/location-form-dialog/location-form-dialog.component';
 import { LocationData } from './models/location.model';
 import { PageChangeDirection, PageMeta } from './models/pagination.model';
@@ -14,7 +14,6 @@ import {
   selectLocationStateAction,
   selectPageMeta,
 } from './store/location/location.selectors';
-import { CommonModule } from '@angular/common';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { LocationRowComponent } from './components/location-row/location-row.component';
 
@@ -23,12 +22,15 @@ import { LocationRowComponent } from './components/location-row/location-row.com
     templateUrl: './locations-app.container.html',
     styleUrls: ['./locations-app.container.scss'],
     imports: [
-      CommonModule,
       LocationRowComponent,
       PaginationComponent,
     ],
 })
 export class LocationsAppContainer implements OnInit, OnDestroy {
+  private readonly _locationStore = inject<Store<LocationState>>(Store);
+  private readonly _dialog = inject(DialogService);
+  private readonly _toast = inject(ToastrService);
+
   locations = toSignal(this._locationStore.select(selectCurrentPageLocations));
   pageMeta = toSignal(this._locationStore.select(selectPageMeta), { initialValue: {
     currentPage: 1,
@@ -40,13 +42,6 @@ export class LocationsAppContainer implements OnInit, OnDestroy {
   } });
   subscriptions = new Subscription();
   loading = true;
-
-  constructor(
-    private readonly _locationStore: Store<LocationState>,
-    private readonly _dialog: DialogService,
-    private readonly _toast: ToastrService,
-  ) {
-  }
 
   ngOnInit(): void {
     this._locationStore.dispatch(LocationActions.loadLocations());
